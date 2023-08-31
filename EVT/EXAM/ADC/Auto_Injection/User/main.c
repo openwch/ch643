@@ -13,7 +13,7 @@
 /*
  *@Note
  *Automatic injection mode routine:
- *ADC channel 1 (PA1) - regular group channel, channel 3 (PA3) - injection group channel
+ *ADC channel 1 (PA1) - regular group channel, channel 2 (PA2) - injection group channel
  *
  */
 
@@ -38,7 +38,7 @@ void ADC_Function_Init(void)
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
     GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
     GPIO_Init(GPIOA, &GPIO_InitStructure);
 
@@ -55,7 +55,7 @@ void ADC_Function_Init(void)
     ADC_Init(ADC1, &ADC_InitStructure);
 
     ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 1, ADC_SampleTime_11Cycles);
-    ADC_InjectedChannelConfig(ADC1, ADC_Channel_3, 1, ADC_SampleTime_11Cycles);
+    ADC_InjectedChannelConfig(ADC1, ADC_Channel_2, 1, ADC_SampleTime_11Cycles);
     ADC_AutoInjectedConvCmd(ADC1, ENABLE);
     ADC_Cmd(ADC1, ENABLE);
 }

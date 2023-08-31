@@ -57,8 +57,7 @@ void GPIO_USB_INIT(void)
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
     GPIO_Init(GPIOC, &GPIO_InitStructure);
 
-    /* Enable USB multiplexing pin */
-    USB_IOEN;
+    AFIO->CTLR = USB_IOEN;
 }
 
 /*********************************************************************
@@ -79,23 +78,19 @@ void USBFS_Host_Init( FunctionalState sta )
         USBFSH->BASE_CTRL = USBFS_UC_HOST_MODE;
         USBFSH->HOST_CTRL = 0;
         USBFSH->DEV_ADDR = 0x00;
-
         USBFSH->HOST_EP_MOD = USBFS_UH_EP_TX_EN | USBFS_UH_EP_RX_EN;
         USBFSH->HOST_RX_DMA = (uint32_t)USBFS_RX_Buf;
         USBFSH->HOST_TX_DMA = (uint32_t)USBFS_TX_Buf;
-
         USBFSH->HOST_RX_CTRL = 0x00;
         USBFSH->HOST_TX_CTRL = 0x00;
-
         USBFSH->BASE_CTRL = USBFS_UC_HOST_MODE | USBFS_UC_INT_BUSY | USBFS_UC_DMA_EN;
-
         USBFSH->HOST_SETUP = 0x40;
         USBFSH->INT_FG = 0xff;
         USBFSH->INT_EN = 0x02 | 0x01;
-
     }
     else
     {
+        AFIO->CTLR &= ~USB_IOEN;
         USBFSH->BASE_CTRL = USBFS_UC_RESET_SIE | USBFS_UC_CLR_ALL;
         Delay_Us( 10 );
         USBFSH->BASE_CTRL = 0;
