@@ -36,7 +36,6 @@ __attribute__((aligned(4))) uint8_t  USBFS_TX_Buf[ USBFS_MAX_PACKET_SIZE ];     
  */
 void USBFS_RCC_Init( void )
 {
-
     RCC_APB2PeriphClockCmd( RCC_APB2Periph_AFIO, ENABLE );
     RCC_AHBPeriphClockCmd( RCC_AHBPeriph_USBFS, ENABLE );
 }
@@ -57,8 +56,7 @@ void GPIO_USB_INIT(void)
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
     GPIO_Init(GPIOC, &GPIO_InitStructure);
 
-    /* Enable USB multiplexing pin */
-    USB_IOEN;
+    AFIO->CTLR = USB_IOEN;
 }
 
 /*********************************************************************
@@ -91,6 +89,7 @@ void USBFS_Host_Init( FunctionalState sta )
     }
     else
     {
+        AFIO->CTLR &= ~USB_IOEN;
         USBFSH->BASE_CTRL = USBFS_UC_RESET_SIE | USBFS_UC_CLR_ALL;
         Delay_Us( 10 );
         USBFSH->BASE_CTRL = 0;

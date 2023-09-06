@@ -105,7 +105,7 @@
 								<option id="ilg.gnumcueclipse.managedbuild.cross.riscv.option.c.linker.usenewlibnosys.351964161" name="Do not use syscalls (--specs=nosys.specs)" superClass="ilg.gnumcueclipse.managedbuild.cross.riscv.option.c.linker.usenewlibnosys" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="true" id="ilg.gnumcueclipse.managedbuild.cross.riscv.option.c.linker.otherobjs.16994550" name="Other objects" superClass="ilg.gnumcueclipse.managedbuild.cross.riscv.option.c.linker.otherobjs" useByScannerDiscovery="false" valueType="userObjs"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="true" id="ilg.gnumcueclipse.managedbuild.cross.riscv.option.c.linker.flags.1125808200" name="Linker flags (-Xlinker [option])" superClass="ilg.gnumcueclipse.managedbuild.cross.riscv.option.c.linker.flags" useByScannerDiscovery="false" valueType="stringList"/>
-								<option id="ilg.gnumcueclipse.managedbuild.cross.riscv.option.c.linker.printf.103758038" superClass="ilg.gnumcueclipse.managedbuild.cross.riscv.option.c.linker.printf" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="ilg.gnumcueclipse.managedbuild.cross.riscv.option.c.linker.printf.103758038" name="Use wchprintf(-lprintf)" superClass="ilg.gnumcueclipse.managedbuild.cross.riscv.option.c.linker.printf" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<inputType id="ilg.gnumcueclipse.managedbuild.cross.riscv.tool.c.linker.input.1859223768" superClass="ilg.gnumcueclipse.managedbuild.cross.riscv.tool.c.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -232,7 +232,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="Startup/startup_ch32v20x_D8W.S|Startup/startup_ch32v20x.S|LiteOS/components/cppsupport|User/task_sample.c|LiteOS/kal|Peripheral|LiteOS/third_party/cmsis/CMSIS/Core|LiteOS/components/exchook|LiteOS/third_party/cmsis|User/task_sample.h|LiteOS/components/net|Debug|LiteOS/testsuits|LiteOS/components/fs" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Startup/startup_ch643_3v3.S|Startup/startup_ch32v20x_D8W.S|Startup/startup_ch32v20x.S|LiteOS/components/cppsupport|User/task_sample.c|LiteOS/kal|Peripheral|LiteOS/third_party/cmsis/CMSIS/Core|LiteOS/components/exchook|LiteOS/third_party/cmsis|User/task_sample.h|LiteOS/components/net|Debug|LiteOS/testsuits|LiteOS/components/fs" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Debug"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Peripheral"/>
 					</sourceEntries>
@@ -256,5 +256,4 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
-	<storageModule moduleId="refreshScope"/>
 </cproject>
