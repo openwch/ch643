@@ -29,6 +29,7 @@
 #include "ch643_wwdg.h"
 #include "ch643_it.h"
 #include "ch643_misc.h"
+#include "ch643_usbpd.h"
 
 
 #endif

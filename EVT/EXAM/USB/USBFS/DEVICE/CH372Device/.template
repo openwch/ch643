@@ -1,6 +1,6 @@
 Mcu Type=CH643
 Address=0x08000000
-Target Path=obj\CH372Device.hex
+Target Path=obj\CompatibilityHID.hex
 Erase All=true
 Program=true
 Verify=true
