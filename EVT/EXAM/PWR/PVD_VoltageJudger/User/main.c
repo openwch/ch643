@@ -2,7 +2,7 @@
  * File Name          : main.c
  * Author             : WCH
  * Version            : V1.0.0
- * Date               : 2023/12/22
+ * Date               : 2024/06/07
  * Description        : Main program body.
  *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
@@ -60,7 +60,7 @@ void PVD_Init(void)
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 
-    PWR_PVDLevelConfig(PWR_PVDLevel_4V0);
+    PWR_PVDLevelConfig(PWR_PVDLevel_3);
 }
 
 /*********************************************************************
