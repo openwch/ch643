@@ -35,7 +35,6 @@ int main(void)
     printf("SystemClk:%d\r\n", SystemCoreClock);
     printf("ChipID:%08x\r\n", DBGMCU_GetCHIPID() );
 
-
     /* Initialize USBFS host */
 #if DEF_USBFS_PORT_EN
     DUG_PRINTF( "USBFS Host Init\r\n" );

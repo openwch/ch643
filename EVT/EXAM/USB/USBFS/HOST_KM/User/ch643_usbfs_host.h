@@ -29,6 +29,7 @@
 #define USBFS_MAX_PACKET_SIZE      64
 #endif
 
+
 #define USB_IOEN                    0x00000080
 #define USB_PHY_V33                 0x00000040
 #define UDP_PUE_MASK                0x0000000C

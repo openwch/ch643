@@ -1,8 +1,8 @@
 /********************************** (C) COPYRIGHT *******************************
 * File Name          : ch643_usbfs_host.c
 * Author             : WCH
-* Version            : V1.0.0
-* Date               : 2023/04/06
+* Version            : V1.0.1
+* Date               : 2025/03/10
 * Description        : USB full-speed port host operation functions.
 *********************************************************************************
 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
@@ -97,7 +97,7 @@ void USBFS_Host_Init( FunctionalState sta , PWR_VDD VDD_Voltage)
         USBFSH->BASE_CTRL = USBFS_UC_HOST_MODE | USBFS_UC_INT_BUSY | USBFS_UC_DMA_EN;
 
         USBFSH->HOST_SETUP = USBFS_UH_SOF_EN;
-        USBFSH->INT_FG = 0xff;
+        USBFSH->INT_FG = 0xFF;
         USBFSH->INT_EN = USBFS_UIE_DETECT | USBFS_UIE_TRANSFER;
     }
     else
