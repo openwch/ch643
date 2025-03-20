@@ -1,8 +1,8 @@
 /********************************** (C) COPYRIGHT *******************************
 * File Name          : ch643_usbfs_device.h
 * Author             : WCH
-* Version            : V1.0.0
-* Date               : 2024/04/16
+* Version            : V1.0.1
+* Date               : 2025/03/10
 * Description        : header file for CH643_usbfs_device.c
 *********************************************************************************
 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
@@ -44,15 +44,27 @@
 #define USBFSD_UEP_RX_EN            0x08
 #define USBFSD_UEP_TX_EN            0x04
 #define USBFSD_UEP_BUF_MOD          0x01
-
-#define DEF_UEP_DMA_LOAD              0 /* Direct the DMA address to the data to be processed */
-#define DEF_UEP_CPY_LOAD              1 /* Use memcpy to move data to a buffer */
+#define DEF_UEP_DMA_LOAD            0 /* Direct the DMA address to the data to be processed */
+#define DEF_UEP_CPY_LOAD            1 /* Use memcpy to move data to a buffer */
 
 /* Ringbuffer define  */
 #define DEF_Ring_Buffer_Max_Blks      16
 #define DEF_RING_BUFFER_SIZE          (DEF_Ring_Buffer_Max_Blks*DEF_USBD_FS_PACK_SIZE)
 #define DEF_RING_BUFFER_REMINE        4
 #define DEF_RING_BUFFER_RESTART       10
+
+/* Ring Buffer typedef */
+typedef struct __PACKED _RING_BUFF_COMM
+{
+    volatile uint8_t LoadPtr;
+    volatile uint8_t DealPtr;
+    volatile uint8_t RemainPack;
+    volatile uint8_t PackLen[DEF_Ring_Buffer_Max_Blks];
+    volatile uint8_t StopFlag;
+} RING_BUFF_COMM, pRING_BUFF_COMM;
+
+/* Setup Request Packets */
+#define pUSBFS_SetupReqPak                 ((PUSB_SETUP_REQ)USBFS_EP0_Buf)
 
 
 #define USB_IOEN                    0x00000080
@@ -68,20 +80,6 @@
 #define UDM_PUE_35UA                0x00000001
 #define UDM_PUE_10K                 0x00000002
 #define UDM_PUE_1K5                 0x00000003
-
-
-/* Ring Buffer typedef */
-typedef struct __PACKED _RING_BUFF_COMM
-{
-    volatile uint8_t LoadPtr;
-    volatile uint8_t DealPtr;
-    volatile uint8_t RemainPack;
-    volatile uint8_t PackLen[DEF_Ring_Buffer_Max_Blks];
-    volatile uint8_t StopFlag;
-} RING_BUFF_COMM, pRING_BUFF_COMM;
-
-/* Setup Request Packets */
-#define pUSBFS_SetupReqPak                 ((PUSB_SETUP_REQ)USBFS_EP0_Buf)
 
 /*******************************************************************************/
 /* Variable Definition */

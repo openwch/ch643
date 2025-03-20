@@ -1,8 +1,8 @@
 /********************************** (C) COPYRIGHT *******************************
 * File Name          : ch643_usbfs_device.c
 * Author             : WCH
-* Version            : V1.0.0
-* Date               : 2024/04/16
+* Version            : V1.0.1
+* Date               : 2025/03/10
 * Description        : This file provides all the USBFS firmware functions.
 *********************************************************************************
 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
@@ -137,6 +137,7 @@ void USBFS_Device_Init( FunctionalState sta , PWR_VDD VDD_Voltage)
         USBFSD->DEV_ADDR = 0x00;
         USBFSD->BASE_CTRL = USBFS_UC_DEV_PU_EN | USBFS_UC_INT_BUSY | USBFS_UC_DMA_EN | USBFS_UC_LOW_SPEED;
         USBFSD->INT_FG = 0xff;
+
         USBFSD->UDEV_CTRL = USBFS_UD_PD_DIS | USBFS_UD_PORT_EN | USBFS_UD_LOW_SPEED;
         USBFSD->INT_EN = USBFS_UIE_SUSPEND | USBFS_UIE_BUS_RST | USBFS_UIE_TRANSFER;
         NVIC_EnableIRQ( USBFS_IRQn );
@@ -362,7 +363,7 @@ void USBFS_IRQHandler( void )
                     case USBFS_UIS_TOKEN_IN | DEF_UEP0:
                         if( USBFS_SetupReqLen == 0 )
                         {
-                            USBFSD->UEP0_CTRL_H = USBFS_UEP_R_TOG | USBFS_UEP_R_RES_ACK;
+                            USBFSD->UEP0_CTRL_H = (USBFSD->UEP0_CTRL_H & ~ USBFS_UEP_R_RES_MASK) | USBFS_UEP_R_TOG | USBFS_UEP_R_RES_ACK;
                         }
 
                         if ( ( USBFS_SetupReqType & USB_REQ_TYP_MASK ) != USB_REQ_TYP_STANDARD )
@@ -443,7 +444,7 @@ void USBFS_IRQHandler( void )
                         if( USBFS_SetupReqLen == 0 )
                         {
                             USBFSD->UEP0_TX_LEN  = 0;
-                            USBFSD->UEP0_CTRL_H = USBFS_UEP_T_TOG | USBFS_UEP_T_RES_ACK;
+                            USBFSD->UEP0_CTRL_H = (USBFSD->UEP0_CTRL_H & ~USBFS_UEP_T_RES_MASK) | USBFS_UEP_T_TOG | USBFS_UEP_T_RES_ACK;
                         }
                         break;
 
@@ -454,7 +455,7 @@ void USBFS_IRQHandler( void )
 
             /* Setup stage processing */
             case USBFS_UIS_TOKEN_SETUP:
-                USBFSD->UEP0_CTRL_H = USBFS_UEP_T_TOG | USBFS_UEP_T_RES_NAK | USBFS_UEP_R_TOG | USBFS_UEP_R_RES_NAK;
+                USBFSD->UEP0_CTRL_H = USBFS_UEP_T_TOG|USBFS_UEP_T_RES_NAK|USBFS_UEP_R_TOG|USBFS_UEP_R_RES_NAK;
 
                 /* Store All Setup Values */
                 USBFS_SetupReqType  = pUSBFS_SetupReqPak->bRequestType;
@@ -840,7 +841,7 @@ void USBFS_IRQHandler( void )
                 if( errflag == 0xFF )
                 {
                     /* if one request not support, return stall */
-                    USBFSD->UEP0_CTRL_H = USBFS_UEP_T_TOG|USBFS_UEP_T_RES_STALL|USBFS_UEP_R_TOG|USBFS_UEP_R_RES_STALL;
+                    USBFSD->UEP0_CTRL_H = USBFS_UEP_T_TOG | USBFS_UEP_T_RES_STALL|USBFS_UEP_R_TOG | USBFS_UEP_R_RES_STALL;
                 }
                 else
                 {
@@ -850,18 +851,18 @@ void USBFS_IRQHandler( void )
                         len = ( USBFS_SetupReqLen > DEF_USBD_UEP0_SIZE )? DEF_USBD_UEP0_SIZE : USBFS_SetupReqLen;
                         USBFS_SetupReqLen -= len;
                         USBFSD->UEP0_TX_LEN = len;
-                        USBFSD->UEP0_CTRL_H = USBFS_UEP_T_TOG | USBFS_UEP_T_RES_ACK;
+                        USBFSD->UEP0_CTRL_H = (USBFSD->UEP0_CTRL_H & ~USBFS_UEP_T_RES_MASK) | USBFS_UEP_T_TOG | USBFS_UEP_T_RES_ACK;
                     }
                     else
                     {
                         if( USBFS_SetupReqLen == 0 )
                         {
                             USBFSD->UEP0_TX_LEN = 0;
-                            USBFSD->UEP0_CTRL_H = USBFS_UEP_T_TOG | USBFS_UEP_T_RES_ACK;
+                            USBFSD->UEP0_CTRL_H = (USBFSD->UEP0_CTRL_H & ~USBFS_UEP_T_RES_MASK) | USBFS_UEP_T_TOG | USBFS_UEP_T_RES_ACK;
                         }
                         else
                         {
-                            USBFSD->UEP0_CTRL_H = USBFS_UEP_R_TOG | USBFS_UEP_R_RES_ACK;
+                            USBFSD->UEP0_CTRL_H = (USBFSD->UEP0_CTRL_H & ~USBFS_UEP_R_RES_MASK) | USBFS_UEP_R_TOG | USBFS_UEP_R_RES_ACK;
                         }
                     }
                 }

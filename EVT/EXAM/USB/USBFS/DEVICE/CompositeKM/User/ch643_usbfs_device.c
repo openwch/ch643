@@ -2,7 +2,7 @@
 * File Name          : ch643_usbfs_device.c
 * Author             : WCH
 * Version            : V1.0.0
-* Date               : 2024/04/16
+* Date               : 2025/03/10
 * Description        : This file provides all the USBFS firmware functions.
 *********************************************************************************
 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
@@ -88,7 +88,7 @@ void USBFS_Device_Endp_Init( void )
     for(uint8_t i=0; i<DEF_UEP_NUM; i++ )
     {
         USBFS_Endp_Busy[ i ] = 0;
-    }    
+    }
 }
 
 /*********************************************************************
@@ -132,6 +132,7 @@ void USBFS_Device_Init( FunctionalState sta , PWR_VDD VDD_Voltage)
         {
             AFIO->CTLR = (AFIO->CTLR & ~(UDP_PUE_MASK | UDM_PUE_MASK )) | USB_PHY_V33 | UDP_PUE_1K5 | USB_IOEN;
         }
+
         USBFSD->BASE_CTRL = 0x00;
         USBFS_Device_Endp_Init( );
         USBFSD->DEV_ADDR = 0x00;
@@ -362,7 +363,7 @@ void USBFS_IRQHandler( void )
                     case USBFS_UIS_TOKEN_IN | DEF_UEP0:
                         if( USBFS_SetupReqLen == 0 )
                         {
-                            USBFSD->UEP0_CTRL_H = USBFS_UEP_R_TOG | USBFS_UEP_R_RES_ACK;
+                            USBFSD->UEP0_CTRL_H = (USBFSD->UEP0_CTRL_H & ~ USBFS_UEP_R_RES_MASK) | USBFS_UEP_R_TOG | USBFS_UEP_R_RES_ACK;
                         }
 
                         if ( ( USBFS_SetupReqType & USB_REQ_TYP_MASK ) != USB_REQ_TYP_STANDARD )
@@ -443,7 +444,7 @@ void USBFS_IRQHandler( void )
                         if( USBFS_SetupReqLen == 0 )
                         {
                             USBFSD->UEP0_TX_LEN  = 0;
-                            USBFSD->UEP0_CTRL_H = USBFS_UEP_T_TOG | USBFS_UEP_T_RES_ACK;
+                            USBFSD->UEP0_CTRL_H = (USBFSD->UEP0_CTRL_H & ~USBFS_UEP_T_RES_MASK) | USBFS_UEP_T_TOG | USBFS_UEP_T_RES_ACK;
                         }
                         break;
 
@@ -455,6 +456,7 @@ void USBFS_IRQHandler( void )
             /* Setup stage processing */
             case USBFS_UIS_TOKEN_SETUP:
                 USBFSD->UEP0_CTRL_H = USBFS_UEP_T_TOG|USBFS_UEP_T_RES_NAK|USBFS_UEP_R_TOG|USBFS_UEP_R_RES_NAK;
+
 
                 /* Store All Setup Values */
                 USBFS_SetupReqType  = pUSBFS_SetupReqPak->bRequestType;
@@ -840,7 +842,7 @@ void USBFS_IRQHandler( void )
                 if( errflag == 0xFF )
                 {
                     /* if one request not support, return stall */
-                    USBFSD->UEP0_CTRL_H = USBFS_UEP_T_TOG|USBFS_UEP_T_RES_STALL|USBFS_UEP_R_TOG|USBFS_UEP_R_RES_STALL;
+                    USBFSD->UEP0_CTRL_H = USBFS_UEP_T_TOG | USBFS_UEP_T_RES_STALL|USBFS_UEP_R_TOG | USBFS_UEP_R_RES_STALL;
                 }
                 else
                 {
@@ -850,18 +852,18 @@ void USBFS_IRQHandler( void )
                         len = ( USBFS_SetupReqLen > DEF_USBD_UEP0_SIZE )? DEF_USBD_UEP0_SIZE : USBFS_SetupReqLen;
                         USBFS_SetupReqLen -= len;
                         USBFSD->UEP0_TX_LEN = len;
-                        USBFSD->UEP0_CTRL_H = USBFS_UEP_T_TOG | USBFS_UEP_T_RES_ACK;
+                        USBFSD->UEP0_CTRL_H = (USBFSD->UEP0_CTRL_H & ~USBFS_UEP_T_RES_MASK) | USBFS_UEP_T_TOG | USBFS_UEP_T_RES_ACK;
                     }
                     else
                     {
                         if( USBFS_SetupReqLen == 0 )
                         {
                             USBFSD->UEP0_TX_LEN = 0;
-                            USBFSD->UEP0_CTRL_H = USBFS_UEP_T_TOG | USBFS_UEP_T_RES_ACK;
+                            USBFSD->UEP0_CTRL_H = (USBFSD->UEP0_CTRL_H & ~USBFS_UEP_T_RES_MASK) | USBFS_UEP_T_TOG | USBFS_UEP_T_RES_ACK;
                         }
                         else
                         {
-                            USBFSD->UEP0_CTRL_H = USBFS_UEP_R_TOG | USBFS_UEP_R_RES_ACK;
+                            USBFSD->UEP0_CTRL_H = (USBFSD->UEP0_CTRL_H & ~USBFS_UEP_R_RES_MASK) | USBFS_UEP_R_TOG | USBFS_UEP_R_RES_ACK;
                         }
                     }
                 }

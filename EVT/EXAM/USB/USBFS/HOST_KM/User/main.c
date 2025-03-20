@@ -40,6 +40,7 @@ int main(void)
     printf("SystemClk:%d\r\n", SystemCoreClock);
     printf("ChipID:%08x\r\n", DBGMCU_GetCHIPID() );
 
+
     /* Initialize TIM3 */
     TIM3_Init( 9, SystemCoreClock / 10000 - 1 );
     printf( "TIM3 Init OK!\r\n" );
@@ -57,5 +58,4 @@ int main(void)
     {
         USBH_MainDeal( );
     }
-
 }
