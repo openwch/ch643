@@ -1,8 +1,8 @@
 /********************************** (C) COPYRIGHT  *******************************
  * File Name          : ch643_dbgmcu.c
  * Author             : WCH
- * Version            : V1.0.0
- * Date               : 2023/04/06
+ * Version            : V1.0.1
+ * Date               : 2025/04/17
  * Description        : This file provides all the DBGMCU firmware functions.
 *********************************************************************************
 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
@@ -22,7 +22,7 @@
  */
 uint32_t DBGMCU_GetREVID(void)
 {
-	return ((*(uint32_t *)0x1FFFF704) >> 16);
+	return ((*(uint32_t *)0x1FFFF704) & IDCODE_DEVID_MASK);
 }
 
 /*********************************************************************
@@ -34,7 +34,7 @@ uint32_t DBGMCU_GetREVID(void)
  */
 uint32_t DBGMCU_GetDEVID(void)
 {
-	return ((*(uint32_t *)0x1FFFF704) & IDCODE_DEVID_MASK);
+	return ((*(uint32_t *)0x1FFFF704) >> 16);
 }
 
 /*********************************************************************
