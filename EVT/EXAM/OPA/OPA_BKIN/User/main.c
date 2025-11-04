@@ -1,8 +1,8 @@
 /********************************** (C) COPYRIGHT *******************************
  * File Name          : main.c
  * Author             : WCH
- * Version            : V1.0.0
- * Date               : 2023/12/26
+ * Version            : V1.0.1
+ * Date               : 2025/10/29
  * Description        : Main program body.
  *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
@@ -16,7 +16,7 @@
  *OPA2_CHP0--PA7
  *OPA2_CHN1--PA5
  *OPA2_OUT--PA4
- *When the output signal is high level, TIM2 brake is effective.PA0--CH1  PA21--C1N
+ *When the output signal is high level, TIM2 brake is effective.PB9--CH1  PB6--C1N
  */
 
 #include "debug.h"
@@ -35,6 +35,10 @@ void OPA2_Init( void )
 
     RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOA, ENABLE );
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7|GPIO_Pin_5;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
+    GPIO_Init( GPIOA, &GPIO_InitStructure );
+
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
     GPIO_Init( GPIOA, &GPIO_InitStructure );
 
@@ -45,15 +49,15 @@ void OPA2_Init( void )
     OPA_InitStructure.PSEL_POLL=CHP_OPA1_ON_OPA2_ON;
     OPA_InitStructure.OPA_POLL_Interval=0x50;
     OPA_InitStructure.BKIN_EN=BKIN_OPA1_ON_OPA2_ON;
-    OPA_InitStructure.BKIN_SEL=BKIN_OPA1_TIM1_OPA2_TIM2;
+    OPA_InitStructure.BKIN_SEL=BKIN_OPA1_TIM2_OPA2_TIM1;
     OPA_Init( &OPA_InitStructure );
     OPA_Cmd(OPA2, ENABLE );
 }
 
 /*********************************************************************
- * @fn      TIM2_PWM_In
+ * @fn      TIM1_PWM_In
  *
- * @brief   Initializes TIM2 input capture.
+ * @brief   Initializes TIM1 input capture.
  *
  * @param   arr - the period value.
  *          psc - the prescaler value.
@@ -61,25 +65,26 @@ void OPA2_Init( void )
  *
  * @return  none
  */
-void TIM2_PWM_In( u16 arr, u16 psc, u16 ccp )
+void TIM1_PWM_In( u16 arr, u16 psc, u16 ccp )
 {
     GPIO_InitTypeDef GPIO_InitStructure;
     TIM_OCInitTypeDef TIM_OCInitStructure;
     TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
     TIM_BDTRInitTypeDef TIM_BDTRInitStructure;
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+
     RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOA  | RCC_APB2Periph_GPIOB | RCC_APB2Periph_TIM1 , ENABLE );
 
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_21;
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9|GPIO_Pin_6;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-    GPIO_Init( GPIOA, &GPIO_InitStructure );
+    GPIO_Init( GPIOB, &GPIO_InitStructure );
 
     TIM_TimeBaseInitStructure.TIM_Period = arr;
     TIM_TimeBaseInitStructure.TIM_Prescaler = psc;
     TIM_TimeBaseInitStructure.TIM_ClockDivision = TIM_CKD_DIV1;
     TIM_TimeBaseInitStructure.TIM_CounterMode = TIM_CounterMode_Up;
-    TIM_TimeBaseInit( TIM2, &TIM_TimeBaseInitStructure);
+    TIM_TimeBaseInit( TIM1, &TIM_TimeBaseInitStructure);
     TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM2;
     TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
     TIM_OCInitStructure.TIM_OutputNState = TIM_OutputNState_Enable;
@@ -88,7 +93,7 @@ void TIM2_PWM_In( u16 arr, u16 psc, u16 ccp )
     TIM_OCInitStructure.TIM_OCNPolarity = TIM_OCNPolarity_Low;
     TIM_OCInitStructure.TIM_OCIdleState = TIM_OCIdleState_Set;
     TIM_OCInitStructure.TIM_OCNIdleState = TIM_OCNIdleState_Set;
-    TIM_OC1Init( TIM2, &TIM_OCInitStructure );
+    TIM_OC1Init( TIM1, &TIM_OCInitStructure );
 
     TIM_BDTRInitStructure.TIM_OSSIState = TIM_OSSIState_Enable;
     TIM_BDTRInitStructure.TIM_OSSRState = TIM_OSSRState_Enable;
@@ -97,12 +102,12 @@ void TIM2_PWM_In( u16 arr, u16 psc, u16 ccp )
     TIM_BDTRInitStructure.TIM_Break = TIM_Break_Enable;
     TIM_BDTRInitStructure.TIM_BreakPolarity = TIM_BreakPolarity_High;
     TIM_BDTRInitStructure.TIM_AutomaticOutput = TIM_AutomaticOutput_Disable;
-    TIM_BDTRConfig( TIM2, &TIM_BDTRInitStructure );
+    TIM_BDTRConfig( TIM1, &TIM_BDTRInitStructure );
 
-    TIM_CtrlPWMOutputs(TIM2, ENABLE );
-    TIM_OC1PreloadConfig( TIM2, TIM_OCPreload_Disable );
-    TIM_ARRPreloadConfig( TIM2, ENABLE );
-    TIM_Cmd( TIM2, ENABLE );
+    TIM_CtrlPWMOutputs(TIM1, ENABLE );
+    TIM_OC1PreloadConfig( TIM1, TIM_OCPreload_Disable );
+    TIM_ARRPreloadConfig( TIM1, ENABLE );
+    TIM_Cmd( TIM1, ENABLE );
 }
 
 /*********************************************************************
@@ -123,7 +128,7 @@ int main(void)
     OPA_POLL_Unlock();
     OPA_Unlock();
     OPA2_Init();
-    TIM2_PWM_In( 1000, 4800-1, 500 );
+    TIM1_PWM_In( 1000, 4800-1, 500 );
 
     while(1);
 }

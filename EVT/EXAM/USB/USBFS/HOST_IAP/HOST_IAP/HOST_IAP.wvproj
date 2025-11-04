@@ -65,9 +65,6 @@
 				"post_script": "",
 				"post_script_description": "",
 				"excludeResources": [
-					"${project}/Startup/startup_ch32v30x_D8C.S",
-					"${project}/Startup/startup_ch32l103_D8.S",
-					"${project}/Startup/startup_ch32l103_D8W.S"
 				],
 				"riscvTargetProcessor": {
 					"architecture": "rv32i",
@@ -360,9 +357,6 @@
 				"post_script": "",
 				"post_script_description": "",
 				"excludeResources": [
-					"${project}/Startup/startup_ch32v30x_D8C.S",
-					"${project}/Startup/startup_ch32l103_D8.S",
-					"${project}/Startup/startup_ch32l103_D8W.S"
 				],
 				"riscvTargetProcessor": {
 					"architecture": "rv32i",
