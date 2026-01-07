@@ -2,7 +2,7 @@
  * File Name          : ch643.h
  * Author             : WCH
  * Version            : V1.0.3
- * Date               : 2025/09/17
+ * Date               : 2025/10/29
  * Description        : ch643 Device Peripheral Access Layer Header File.
 *********************************************************************************
 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
@@ -23,7 +23,7 @@ extern "C" {
 
 /* Standard Peripheral Library version number */
 #define __STDPERIPH_VERSION_MAIN   (0x02) /* [15:8] main version */
-#define __STDPERIPH_VERSION_SUB    (0x00) /* [7:0] sub version */
+#define __STDPERIPH_VERSION_SUB    (0x01) /* [7:0] sub version */
 #define __STDPERIPH_VERSION        ((__STDPERIPH_VERSION_MAIN << 8)\
                                     |(__STDPERIPH_VERSION_SUB << 0))
 
@@ -658,7 +658,6 @@ typedef struct
     uint8_t        RESERVED14;
 } USBFSH_TypeDef;
 
-
 /* Peripheral memory map */
 #define FLASH_BASE                              ((uint32_t)0x08000000) /* FLASH base address in the alias region */
 #define SRAM_BASE                               ((uint32_t)0x20000000) /* SRAM base address in the alias region */
@@ -786,7 +785,6 @@ typedef struct
 #define ADC_DISCNUM_0                           ((uint32_t)0x00002000) /* Bit 0 */
 #define ADC_DISCNUM_1                           ((uint32_t)0x00004000) /* Bit 1 */
 #define ADC_DISCNUM_2                           ((uint32_t)0x00008000) /* Bit 2 */
-
 
 #define ADC_JAWDEN                              ((uint32_t)0x00400000) /* Analog watchdog enable on injected channels */
 #define ADC_AWDEN                               ((uint32_t)0x00800000) /* Analog watchdog enable on regular channels */
@@ -2324,7 +2322,6 @@ typedef struct
 #define AFIO_CTLR_PB5_FILT_EN                   ((uint32_t)0x04000000) /* Controls the input filtering of the PB5 pin */
 #define AFIO_CTLR_PB6_FILT_EN                   ((uint32_t)0x08000000) /* Controls the input filtering of the PB6 pin */
 
-
 /******************************************************************************/
 /*                           Independent WATCHDOG                             */
 /******************************************************************************/
@@ -2434,7 +2431,6 @@ typedef struct
 /******************************************************************************/
 
 /********************  Bit definition for PWR_CTLR register  ********************/
-
 #define PWR_CTLR_PDDS                           ((uint16_t)0x0002) /* Power Down Deepsleep */
 
 #define PWR_CTLR_PLS                            ((uint16_t)0x0060) /* PLS[2:0] bits (PVD Level Selection) */
@@ -2582,7 +2578,7 @@ typedef struct
 #define SPI_CTLR1_BIDIMODE                      ((uint16_t)0x8000) /* Bidirectional data mode enable */
 
 /*******************  Bit definition for SPI_CTLR2 register  ********************/
-#define SPI_CTLR2_RXDMAEN                       ((uint16_t)0x01) /* Rx Buffer DMA Enable */
+#define SPI_CTLR2_RXDMAEN                       ((uint8_t)0x01) /* Rx Buffer DMA Enable */
 #define SPI_CTLR2_TXDMAEN                       ((uint8_t)0x02) /* Tx Buffer DMA Enable */
 #define SPI_CTLR2_SSOE                          ((uint8_t)0x04) /* SS Output Enable */
 #define SPI_CTLR2_ERRIE                         ((uint8_t)0x20) /* Error Interrupt Enable */
@@ -2639,7 +2635,6 @@ typedef struct
 #define TIM_CMP_BK                              ((uint16_t)0x1000) /* voltage comparator break enable, TIM1 only */
 #define TIM_CAPOV                               ((uint16_t)0x4000) /* configure of capture value */
 #define TIM_CAPLVL                              ((uint16_t)0x8000) 
-
 
 /*******************  Bit definition for TIM_CTLR2 register  ********************/
 #define TIM_CCPC                                ((uint16_t)0x0001) /* Capture/Compare Preloaded Control */

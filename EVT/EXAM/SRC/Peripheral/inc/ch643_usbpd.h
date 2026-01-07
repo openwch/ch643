@@ -1,8 +1,8 @@
 /********************************** (C) COPYRIGHT  *******************************
  * File Name          : ch643_usbpd.h
  * Author             : WCH
- * Version            : V1.0.0
- * Date               : 2023/04/06
+ * Version            : V1.0.1
+ * Date               : 2025/10/29
  * Description        : This file contains all the functions prototypes for the USBPD
  *                      firmware library.
 *********************************************************************************
@@ -112,7 +112,7 @@ typedef volatile unsigned long  *PUINT32V;
 
 /* Register Bit Definition */
 /* USBPD->CONFIG */
-#define PD_FILT_ED          (1<<0)            /* PD pin input filter enable */
+#define PD_FILT_ED          (1<<0)             /* PD pin input filter enable */
 #define PD_ALL_CLR          (1<<1)             /* Clear all interrupt flags */
 #define CC_SEL              (1<<2)             /* Select PD communication port */
 #define PD_DMA_EN           (1<<3)             /* Enable DMA for USBPD */
@@ -169,7 +169,7 @@ typedef volatile unsigned long  *PUINT32V;
 /* USBPD->PORT_CC2 */
 #define PA_CC_AI            (1<<0)               /* CC port comparator analogue input */
 #define CC_PD               (1<<1)               /* CC port pull-down resistor enable */
-#define CC_PU_Mask          (3<<2)               /* Clear CC port pull-up current selection */
+#define CC_PU_Mask          (3<<2)               /* Clear CC port pull-up current */
 #define CC_NO_PU            (0<<2)               /* 00-Prohibit pull-up current */
 #define CC_PU_330           (1<<2)               /* 01-330uA */
 #define CC_PU_180           (2<<2)               /* 10-180uA */
