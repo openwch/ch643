@@ -42,7 +42,7 @@ const uint8_t  MyCfgDescr[] =
     0x01,                           // bNumInterfaces
     0x01,                           // bConfigurationValue
     0x03,                           // iConfiguration (String Index)
-    0x80,                           // bmAttributes Remote Wakeup
+    0x80,                           // bmAttributes (bit7 reserved = 1, no remote wakeup)
     0x23,                           // bMaxPower 70mA
 
     /* Interface Descriptor */
@@ -118,7 +118,7 @@ const uint8_t  MyManuInfo[] =
 /* Product Information */
 const uint8_t  MyProdInfo[] =
 {
-    0x12, 0x03, 'C', 0, 'H', 0, '6', 0, '4', 0, '3', 0,
+    0x0C, 0x03, 'C', 0, 'H', 0, '6', 0, '4', 0, '3', 0,
 };
 
 /* Serial Number Information */

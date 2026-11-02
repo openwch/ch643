@@ -1,8 +1,8 @@
 /********************************** (C) COPYRIGHT *******************************
  * File Name          : main.c
  * Author             : WCH
- * Version            : V1.0.0
- * Date               : 2023/12/26
+ * Version            : V1.0.1
+ * Date               : 2026/10/16
  * Description        : Main program body.
 *********************************************************************************
 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
@@ -62,7 +62,7 @@ int main(void)
     USART_Printf_Init(115200);
 #endif
 
-    printf("SystemClk:%d\r\n", SystemCoreClock);
+    printf("SystemClk:%u\r\n", SystemCoreClock);
 
     GPIO_Toggle_INIT();
 

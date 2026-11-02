@@ -1,8 +1,8 @@
 /********************************** (C) COPYRIGHT *******************************
  * File Name          : main.c
  * Author             : WCH
- * Version            : V1.0.1
- * Date               : 2025/07/29
+ * Version            : V1.0.2
+ * Date               : 2026/10/14
  * Description        : Main program body.
  *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
@@ -118,7 +118,6 @@ void AWU_IRQHandler()
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
     GPIO_PinRemapConfig(GPIO_Remap_SWJ_Disable, DISABLE);
     USART_Printf_Init(115200);
-    printf("\r\n Auto wake up \r\n");
 }
 
 
