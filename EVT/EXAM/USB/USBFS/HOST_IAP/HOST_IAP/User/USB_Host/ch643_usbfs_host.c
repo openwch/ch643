@@ -334,7 +334,7 @@ uint8_t USBFSH_Transact( uint8_t endp_pid, uint8_t endp_tog, uint16_t timeout )
                     }
                     break;
                 case USB_PID_IN:
-                    if( ( r == USB_PID_DATA0 ) && ( r == USB_PID_DATA1 ) )
+                    if( ( r == USB_PID_DATA0 ) || ( r == USB_PID_DATA1 ) )
                     {
                         ;
                     }
@@ -652,7 +652,7 @@ uint8_t USBFSH_GetEndpData( uint8_t endp_num, uint8_t *pendp_tog, uint8_t *pbuf,
     s = USBFSH_Transact( ( USB_PID_IN << 4 ) | endp_num, *pendp_tog, 0 );
     if( s == ERR_SUCCESS )
     {
-        *pendp_tog ^= USBFS_UH_T_TOG | USBFS_UH_R_TOG;
+        *pendp_tog ^= USBFS_UH_R_TOG;
         *plen = USBFSH->RX_LEN;
         memcpy( pbuf, USBFS_RX_Buf, *plen );
     }

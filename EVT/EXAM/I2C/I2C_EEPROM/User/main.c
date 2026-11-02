@@ -1,8 +1,8 @@
 /********************************** (C) COPYRIGHT *******************************
  * File Name          : main.c
  * Author             : WCH
- * Version            : V1.0.0
- * Date               : 2023/04/06
+ * Version            : V1.0.1
+ * Date               : 2026/10/08
  * Description        : Main program body.
  *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
@@ -26,10 +26,10 @@
 
 /**********************************************************************
 *@Note:
-AT24Cxx£º
+AT24Cxx: 
 
-READ EEPROM£ºStart + 0xA0 + 8bit Data Address + Start + 0xA1 + Read Data + Stop.
-WRITE EERPOM£ºStart + 0xA0 + 8bit Data Address + Write Data + Stop.
+READ EEPROM: Start + 0xA0 + 8bit Data Address + Start + 0xA1 + Read Data + Stop.
+WRITE EERPOM: Start + 0xA0 + 8bit Data Address + Write Data + Stop.
 *******************************************************************************/
 /* EERPOM DATA ADDRESS Length Definition */
 #define Address_8bit  0

@@ -42,10 +42,11 @@ void SYSTICK_Init_Config(u64 ticks)
 
 void SysTick_Handler(void)
 {
-    printf("welcome to WCH\r\n");
     SysTick->SR = 0;
     counter++;
+    #if 0
     printf("Counter:%d\r\n",counter);
+    #endif
 }
 
 /*********************************************************************

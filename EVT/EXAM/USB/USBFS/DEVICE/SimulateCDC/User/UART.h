@@ -42,7 +42,7 @@ extern "C" {
 
 /* Serial port transceiver DMA channel related macro definition */
 #define DEF_UART2_TX_DMA_CH        DMA1_Channel7                                /* Serial 2 transmit channel DMA channel */
-#define DEF_UART2_RX_DMA_CH        DMA1_Channel6                                /* Serial 1 transmit channel DMA channel */
+#define DEF_UART2_RX_DMA_CH        DMA1_Channel6                                /* Serial 2 receive channel DMA channel */
 
 /************************************************************/
 /* Serial port X related structure definition */
@@ -82,18 +82,18 @@ extern volatile UART_CTL Uart;                                                  
 extern volatile uint32_t UARTx_Rx_DMACurCount;                                    /* Serial x receive DMA current count */
 extern volatile uint32_t UARTx_Rx_DMALastCount;                                   /* last count of DMA received by serial x */
 extern __attribute__ ((aligned(4))) uint8_t UART2_Tx_Buf[ DEF_UARTx_TX_BUF_LEN ]; /* Serial x transmit buffer */
-extern __attribute__ ((aligned(4))) uint8_t UART2_Rx_Buf[ DEF_UARTx_RX_BUF_LEN ]; /* Serial x transmit buffer */
+extern __attribute__ ((aligned(4))) uint8_t UART2_Rx_Buf[ DEF_UARTx_RX_BUF_LEN ]; /* Serial x receive buffer */
 
 /***********************************************************************************************************************/
 /* Function extensibility */
 extern uint8_t RCC_Configuration( void );
 extern void TIM3_Init( void );
-extern void UART2_CfgInit( uint32_t baudrate, uint8_t stopbits, uint8_t parity ); /* UART1 initialization */
+extern void UART2_CfgInit( uint32_t baudrate, uint8_t stopbits, uint8_t parity ); /* USART2 initialization */
 extern void UART2_ParaInit( uint8_t mode );                                       /* Serial port parameter initialization */
-extern void UART2_DMAInit( uint8_t type, uint8_t *pbuf, uint32_t len );           /* Serial port 1-related DMA initialization */
-extern void UART2_Init( uint8_t mode, uint32_t baudrate, uint8_t stopbits, uint8_t parity ); /* Serial port 1 initialization */
-extern void UART2_DataTx_Deal( void );                                            /* Serial port 1 data sending processing  */
-extern void UART2_DataRx_Deal( void );                                            /* Serial port 1 data reception processing */
+extern void UART2_DMAInit( uint8_t type, uint8_t *pbuf, uint32_t len );           /* Serial port 2-related DMA initialization */
+extern void UART2_Init( uint8_t mode, uint32_t baudrate, uint8_t stopbits, uint8_t parity ); /* Serial port 2 initialization */
+extern void UART2_DataTx_Deal( void );                                            /* Serial port 2 data sending processing  */
+extern void UART2_DataRx_Deal( void );                                            /* Serial port 2 data reception processing */
 extern void UART2_USB_Init( void );                                               /* USB serial port initialization*/
 
 #ifdef __cplusplus

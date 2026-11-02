@@ -2,7 +2,7 @@
  * File Name          : main.c
  * Author             : WCH
  * Version            : V1.0.1
- * Date               : 2025/01/03
+ * Date               : 2026/10/14
  * Description        : Main program body.
 *********************************************************************************
 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
@@ -30,7 +30,7 @@
 void TIM1_UP_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 void EXTI15_8_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 volatile UINT8  Tim_Ms_Cnt = 0x00;
-
+vu8 falg_Wakeup=0;
 /*********************************************************************
  * @fn      TIM1_Init
  *
@@ -120,6 +120,11 @@ int main(void)
             PD_Det_Proc( );
         }
         PD_Main_Proc( );
+        if(falg_Wakeup==1)
+        {
+            printf("WakeUp\r\n");
+            falg_Wakeup=0;
+        }
     }
 }
 
@@ -151,14 +156,14 @@ void EXTI15_8_IRQHandler(void)
   if(EXTI_GetITStatus(EXTI_Line14)!=RESET)
   {
       SystemInit();
-      printf(" Wake_up\r\n");
+      falg_Wakeup=1;
       EXTI_ClearITPendingBit(EXTI_Line14);     /* Clear Flag */
       NVIC_DisableIRQ(EXTI15_8_IRQn);
   }
   if(EXTI_GetITStatus(EXTI_Line15)!=RESET)
   {
       SystemInit();
-      printf(" Wake_up\r\n");
+      falg_Wakeup=1;
       EXTI_ClearITPendingBit(EXTI_Line15);     /* Clear Flag */
       NVIC_DisableIRQ(EXTI15_8_IRQn);
     }

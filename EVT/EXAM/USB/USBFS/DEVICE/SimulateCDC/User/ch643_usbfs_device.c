@@ -468,7 +468,7 @@ void USBFS_IRQHandler( void )
                         }
                         break;
 
-                    /* end-point 1 data out interrupt */
+                    /* end-point 2 data out interrupt */
                     case USBFS_UIS_TOKEN_OUT | DEF_UEP2:
                         USBFSD->UEP2_CTRL_H ^= USBFS_UEP_R_TOG;
                         Uart.Tx_PackLen[ Uart.Tx_LoadNum ] = USBFSD->RX_LEN;
@@ -645,6 +645,10 @@ void USBFS_IRQHandler( void )
                                 {
                                     /* clear usb sleep status, device not prepare to sleep */
                                     USBFS_DevSleepStatus &= ~0x01;
+                                }
+                                else
+                                {
+                                    errflag = 0xFF;
                                 }
                             }
                             else if( ( USBFS_SetupReqType & USB_REQ_RECIP_MASK ) == USB_REQ_RECIP_ENDP )

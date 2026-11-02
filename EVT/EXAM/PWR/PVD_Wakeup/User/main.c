@@ -1,8 +1,8 @@
 /********************************** (C) COPYRIGHT *******************************
 * File Name          : main.c
 * Author             : WCH
-* Version            : V1.0.0
-* Date               : 2024/06/07
+* Version            : V1.0.1
+* Date               : 2026/10/14
 * Description        : Main program body.
 *********************************************************************************
 * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
@@ -27,7 +27,6 @@ void PVD_IRQHandler(void)
     if (EXTI_GetITStatus(EXTI_Line16) != RESET)
     {
         SystemInit();
-        printf("Run at EXTI\r\n");
         EXTI_ClearITPendingBit(EXTI_Line16);
     }
 }
@@ -52,7 +51,7 @@ void PVD_Init(void)
     EXIT_InitStructure.EXTI_Line = EXTI_Line16;
     EXIT_InitStructure.EXTI_LineCmd = ENABLE;
     EXIT_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-    EXIT_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling; // 4.2V
+    EXIT_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling; 
     EXTI_Init(&EXIT_InitStructure);
 
     NVIC_InitStructure.NVIC_IRQChannel = PVD_IRQn;
@@ -80,7 +79,7 @@ int main(void)
     SystemCoreClockUpdate();
     Delay_Init();
     USART_Printf_Init(115200);
-    printf("SystemClk:%d\r\n", SystemCoreClock);
+    printf("SystemClk:%u\r\n", SystemCoreClock);
     printf("ChipID:%08x\r\n", DBGMCU_GetCHIPID());
 
     printf("PVD wakeup TEST\r\n");
@@ -92,10 +91,8 @@ int main(void)
     printf("Fall asleep...\r\n");
     Delay_Ms(100);
     PWR_EnterSTOPMode( PWR_STOPEntry_WFI);
+    Delay_Ms(20);
     printf("Wake up!!\r\n");
 
-    while (1)
-    {
-        Delay_Ms(250);
-    }
+    while (1);
 }
